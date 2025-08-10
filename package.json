@@ -1,5 +1,5 @@
 {
-  "name": "tiktok_view_bot",
+  "name": "youtube_view_bot",
   "version": "1.0.0",
   "scripts": {
     "start": "node server.js"

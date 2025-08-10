@@ -3,187 +3,703 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok View Bot</title>
+    <title>YouTube View Bot - Advanced Human Behavior Simulation</title>
     <script src="/socket.io/socket.io.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        * {
             margin: 0;
-            color: #fff;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            color: #333;
-        }
-        h1 {
-            color: #ff2d55;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1.1em;
-            color: #555;
-        }
-        input, button {
-            margin: 12px;
-            padding: 14px;
-            font-size: 16px;
-            border-radius: 8px;
-            width: calc(100% - 28px);
-            max-width: 400px;
+            padding: 0;
             box-sizing: border-box;
-            transition: all 0.3s;
         }
-        input {
-            border: 1px solid #ccc;
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
         }
-        input:focus {
-            border: 1px solid #ff2d55;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .input-section h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-field:focus {
             outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-        button {
-            background: #ff2d55;
+
+        .start-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #e0264b;
-        }
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        .error {
-            color: #ff2d55;
-            font-weight: bold;
-            min-height: 24px;
-        }
-        #status {
+            border-radius: 12px;
             font-size: 18px;
-            margin: 20px 0;
-            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        #updates {
-            max-height: 200px;
-            overflow-y: auto;
-            text-align: left;
-            margin: 20px auto;
+
+        .start-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .start-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .features-section h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             padding: 15px;
-            background: #f9f9f9;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-icon {
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .feature-text {
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .status-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 30px;
+        }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .status-header h2 {
+            color: #4a5568;
+            font-size: 1.5rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .updates-container {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .update-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
             border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            font-size: 14px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 3px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .update {
-            margin: 5px 0;
-            color: #333;
+
+        .update-time {
+            font-size: 0.8rem;
+            color: #64748b;
+            min-width: 60px;
         }
-        #browser-view {
-            margin: 20px auto;
+
+        .update-message {
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .screenshot-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .screenshot-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .screenshot-header h2 {
+            color: #4a5568;
+            font-size: 1.5rem;
+        }
+
+        .screenshot-container {
+            position: relative;
+            background: #1a202c;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .browser-frame {
+            background: #2d3748;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        .browser-url {
+            background: #4a5568;
+            color: #e2e8f0;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .screenshot-display {
             width: 100%;
-            max-width: 600px;
-            border: 2px solid #ff2d55;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+            height: auto;
             display: block;
+            background: #1a202c;
+            min-height: 300px;
+            object-fit: contain;
         }
-        @media (max-width: 600px) {
+
+        .screenshot-info {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 12px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .how-it-works {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 30px;
+        }
+
+        .how-it-works h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .how-it-works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .how-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .how-item i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .how-item h3 {
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .how-item p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .setup-guide {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #10b981;
+        }
+
+        .setup-guide h3 {
+            color: #065f46;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .setup-steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .setup-steps li {
+            counter-increment: step-counter;
+            margin-bottom: 12px;
+            padding-left: 40px;
+            position: relative;
+            color: #374151;
+        }
+
+        .setup-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #10b981;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .how-it-works-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
             .container {
                 padding: 15px;
-                margin: 10px;
             }
-            input, button, #browser-view {
-                width: calc(100% - 20px);
-            }
+        }
+
+        .updates-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .updates-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+
+        .updates-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .updates-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>TikTok View Bot</h1>
-        <p>Enter a TikTok video URL and number of views (1-1000).</p>
-        <input type="text" id="url" placeholder="TikTok Video URL" required>
-        <input type="number" id="views" placeholder="Number of Views (1-1000)" min="1" max="1000" required>
-        <button id="start">Start Bot</button>
-        <div id="error" class="error"></div>
-        <div id="status"></div>
-        <div id="updates"></div>
-        <img id="browser-view" src="" alt="Headless Browser View">
+        <div class="header">
+            <h1><i class="fab fa-youtube"></i> YouTube View Bot</h1>
+            <p class="subtitle">Advanced Human Behavior Simulation with Real Browser Automation</p>
+        </div>
+
+        <div class="how-it-works">
+            <h2><i class="fas fa-info-circle"></i> How This Works</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: #64748b; font-size: 1.1rem;">
+                This bot simulates real YouTube viewing behavior by launching actual Chromium browsers that watch your videos just like real users would. It captures screenshots every 10 milliseconds to provide live feedback of what's happening.
+            </p>
+            
+            <div class="how-it-works-grid">
+                <div class="how-item">
+                    <i class="fas fa-browser"></i>
+                    <h3>Real Browser</h3>
+                    <p>Uses actual Chromium browsers, not fake requests. Counts as legitimate views.</p>
+                </div>
+                <div class="how-item">
+                    <i class="fas fa-camera"></i>
+                    <h3>10ms Screenshots</h3>
+                    <p>Ultra-fast screenshot capture every 10 milliseconds for real-time monitoring.</p>
+                </div>
+                <div class="how-item">
+                    <i class="fas fa-user"></i>
+                    <h3>Human Behavior</h3>
+                    <p>Simulates realistic mouse movements, scrolling, and viewing patterns.</p>
+                </div>
+                <div class="how-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>Proper Duration</h3>
+                    <p>Watches videos for 45-105 seconds to meet YouTube's view counting requirements.</p>
+                </div>
+                <div class="how-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>No Sandbox</h3>
+                    <p>Runs with proper browser permissions for maximum compatibility.</p>
+                </div>
+                <div class="how-item">
+                    <i class="fas fa-eye"></i>
+                    <h3>View Focus Only</h3>
+                    <p>Focuses purely on generating views - no liking or subscribing to avoid detection.</p>
+                </div>
+            </div>
+
+            <div class="setup-guide">
+                <h3><i class="fas fa-rocket"></i> Quick Setup Guide</h3>
+                <ol class="setup-steps">
+                    <li><strong>Paste your YouTube video URL</strong> (supports regular videos and shorts)</li>
+                    <li><strong>Choose how many views you want</strong> (1-100 recommended for safety)</li>
+                    <li><strong>Click start and watch live screenshots</strong> as the bot works</li>
+                </ol>
+                <p style="margin-top: 15px; color: #64748b; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> <strong>Important:</strong> Each view takes 45-105 seconds to complete properly. The bot runs on port 3000 and captures screenshots every 10ms for real-time feedback.
+                </p>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="card input-section">
+                <h2><i class="fas fa-play-circle"></i> Start Automation</h2>
+                <div class="error-message" id="error"></div>
+                
+                <div class="input-group">
+                    <label for="url"><i class="fab fa-youtube"></i> YouTube Video URL</label>
+                    <input type="text" id="url" class="input-field" placeholder="https://www.youtube.com/watch?v=..." required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="views"><i class="fas fa-eye"></i> Number of Views (1-100)</label>
+                    <input type="number" id="views" class="input-field" placeholder="10" min="1" max="100" required>
+                </div>
+                
+                <button id="start" class="start-button">
+                    <i class="fas fa-rocket"></i>
+                    Start View Bot
+                </button>
+            </div>
+
+            <div class="card features-section">
+                <h2><i class="fas fa-star"></i> Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-globe feature-icon"></i>
+                        <span class="feature-text">Multiple Countries</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-fingerprint feature-icon"></i>
+                        <span class="feature-text">Unique Fingerprints</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mouse feature-icon"></i>
+                        <span class="feature-text">Human Interactions</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt feature-icon"></i>
+                        <span class="feature-text">Mobile & Desktop</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-random feature-icon"></i>
+                        <span class="feature-text">Random Behaviors</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt feature-icon"></i>
+                        <span class="feature-text">Anti-Detection</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-section">
+            <div class="status-header">
+                <h2><i class="fas fa-chart-line"></i> Live Status</h2>
+                <div class="status-indicator"></div>
+            </div>
+            <div class="updates-container" id="updates">
+                <div class="update-item">
+                    <div class="update-time">Ready</div>
+                    <div class="update-message">Bot is ready to start. Enter a YouTube URL and click start.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screenshot-section">
+            <div class="screenshot-header">
+                <h2><i class="fas fa-desktop"></i> Live Browser View</h2>
+            </div>
+            <div class="screenshot-container">
+                <div class="browser-frame">
+                    <div class="browser-dot dot-red"></div>
+                    <div class="browser-dot dot-yellow"></div>
+                    <div class="browser-dot dot-green"></div>
+                    <div class="browser-url">youtube.com</div>
+                </div>
+                <img id="browser-view" class="screenshot-display" src="" alt="Browser will appear here when bot starts">
+                <div class="screenshot-info" id="screenshot-info">
+                    Waiting for bot to start...
+                </div>
+            </div>
+        </div>
     </div>
+
     <script>
         const socket = io();
         const urlInput = document.getElementById('url');
         const viewsInput = document.getElementById('views');
         const startButton = document.getElementById('start');
         const errorDiv = document.getElementById('error');
-        const statusDiv = document.getElementById('status');
         const updatesDiv = document.getElementById('updates');
         const browserView = document.getElementById('browser-view');
+        const screenshotInfo = document.getElementById('screenshot-info');
+
+        function addUpdate(message) {
+            const updateElement = document.createElement('div');
+            updateElement.className = 'update-item';
+            
+            const time = new Date().toLocaleTimeString();
+            updateElement.innerHTML = `
+                <div class="update-time">${time}</div>
+                <div class="update-message">${message}</div>
+            `;
+            
+            updatesDiv.appendChild(updateElement);
+            updatesDiv.scrollTop = updatesDiv.scrollHeight;
+        }
+
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
 
         startButton.addEventListener('click', async () => {
             const url = urlInput.value.trim();
             const views = parseInt(viewsInput.value);
 
-            if (!url.startsWith('https://www.tiktok.com/')) {
-                errorDiv.textContent = 'Please enter a valid TikTok URL starting with https://www.tiktok.com/';
-                return;
-            }
-            if (isNaN(views) || views < 1 || views > 1000) {
-                errorDiv.textContent = 'Views must be between 1 and 1000';
+            // Validation
+            if (!url) {
+                showError('Please enter a YouTube URL');
                 return;
             }
 
-            errorDiv.textContent = '';
-            statusDiv.textContent = `Starting bot for ${url} with ${views} views...`;
+            if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
+                showError('Please enter a valid YouTube URL');
+                return;
+            }
+
+            if (isNaN(views) || views < 1 || views > 100) {
+                showError('Views must be between 1 and 100');
+                return;
+            }
+
+            // Start bot
+            startButton.disabled = true;
+            startButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting Bot...';
             updatesDiv.innerHTML = '';
             browserView.src = '';
-            startButton.disabled = true;
+            screenshotInfo.textContent = 'Initializing browser...';
 
-            const response = await fetch('/start', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url, views, socketId: socket.id })
-            });
+            try {
+                const response = await fetch('/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url, views, socketId: socket.id })
+                });
 
-            if (!response.ok) {
-                errorDiv.textContent = 'Failed to start bot. Check the URL and try again.';
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to start bot');
+                }
+
+                addUpdate(result.message);
+            } catch (error) {
+                showError(error.message);
                 startButton.disabled = false;
+                startButton.innerHTML = '<i class="fas fa-rocket"></i> Start View Bot';
             }
         });
 
         socket.on('bot_update', (data) => {
-            const updateElement = document.createElement('p');
-            updateElement.className = 'update';
-            updateElement.textContent = data.message;
-            updatesDiv.appendChild(updateElement);
-            updatesDiv.scrollTop = updatesDiv.scrollHeight;
-            if (data.message.includes('Bot finished') || data.message.includes('Error on view')) {
+            addUpdate(data.message);
+            
+            if (data.message.includes('completed successfully') || data.message.includes('Bot error')) {
                 startButton.disabled = false;
+                startButton.innerHTML = '<i class="fas fa-rocket"></i> Start View Bot';
             }
         });
 
         socket.on('screenshot', (data) => {
             browserView.src = `data:image/png;base64,${data.image}`;
+            screenshotInfo.textContent = data.context || 'Live browser view';
         });
 
         socket.on('connect', () => {
-            updatesDiv.innerHTML += '<p class="update">Connected to server</p>';
+            addUpdate('✅ Connected to server');
         });
 
         socket.on('disconnect', () => {
-            updatesDiv.innerHTML += '<p class="update">Disconnected from server</p>';
+            addUpdate('❌ Disconnected from server');
             startButton.disabled = false;
+            startButton.innerHTML = '<i class="fas fa-rocket"></i> Start View Bot';
+        });
+
+        // Auto-focus URL input
+        urlInput.focus();
+
+        // Enter key support
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !startButton.disabled) {
+                startButton.click();
+            }
         });
     </script>
 </body>
